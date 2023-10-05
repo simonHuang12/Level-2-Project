@@ -1,0 +1,29 @@
+.grid-container{
+    display:flex;
+    height:66%;
+    width:66%;
+    border: 3px black;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
+.card-container{
+    display:grid;
+    height: 500px;
+    width: 500px;
+    justify-content: center;
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: repeat(4, 50px);
+    grid-gap: 20px;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
+.card{
+    height:50px;
+    width:50px;
+}
