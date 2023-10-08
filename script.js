@@ -1,63 +1,56 @@
-let buttonContainer, images, reset, imgDivs, score, matchedPairs;
-let flippedCards = [];
-const initialize = () => {
-    images = ["img1.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png",
-        "img1.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png",];
+const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const cards = symbols.concat(symbols); // Duplicate the symbols to create pairs
+let openedCards = [];
+let matchedPairs = 0;
+let moves = 0;
 
-    reset = document.querySelector("button");
-    cardContainer = document.getElementById("card-container")
+const container = document.getElementById('game-container');
 
-    cardDivs = cardContainer.querySelectorAll(".flip-card-inner")
-    frontImgDivs = cardContainer.querySelectorAll(".front");
-    backImgDivs = cardContainer.querySelectorAll(".back");
-    for (let i = 0; i < frontImgDivs.length; i++) {
-        frontImgDivs[i].addEventListener("click", () => flipCard(cardDivs[i]));
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-    images.sort(() => Math.random() - 0.5);
-    frontImgDivs.forEach((img, idx) => {
-        img.src = "images/front.png";
-    });
-    backImgDivs.forEach((img, idx) => {
-        img.src = `images/${images[idx]}`;
-    });
-    score = 0;
-    matchedPairs = 0;
 }
-const resetGame = () => {
-    location.reload();
-}
-const match = () => {
 
-}
-const flipCard = (card) => {
-
-
-    if (flippedCards.length < 2 && !card.classList.contains("flipped")) {
-        card.classList.add("flipped");
-        flippedCards.push(card);
-        console.log(card);
-        score++;
-        document.getElementById("score").innerHTML = score;
-        card.style.transform = "rotatey(180deg)";
-        card.style.transitionDuration = "0.5s";
-        if (flippedCards.length === 2) {
-            if (flippedCards[0] === flippedCards[1]) {
-                flippedCards[0].classList.add("matched");
-                flippedCards[1].classList.add("matched");
-                matchedPairs++;
-                document.getElementById("matched-pairs").innerHTML = matchedPairs;
-                flippedCards = [];
-            } else {
-                setTimeout(() => {
-                    card.classList.remove("flipped");
-                },);
-                flippedCards = [];
+function createCard(symbol) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.textContent = symbol;
+    card.addEventListener('click', () => {
+        if (openedCards.length < 2 && !openedCards.includes(card) && !card.classList.contains('matched')) {
+            card.classList.add('flipped');
+            openedCards.push(card);
+            if (openedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                if (openedCards[0].textContent === openedCards[1].textContent) {
+                    openedCards.forEach(card => card.classList.add('matched'));
+                    matchedPairs++;
+                    openedCards = [];
+                    if (matchedPairs === symbols.length) {
+                        alert(`Congratulations! You won in ${moves} moves.`);
+                    }
+                } else {
+                    setTimeout(() => {
+                        openedCards.forEach(card => card.classList.remove('flipped'));
+                        openedCards = [];
+                    }, 1000);
+                }
             }
-            if (matchedPairs === 8) {
-                setTimeout(() => alert("You win!"));
-            }
-        }else{
-            card.classList.remove("flipped");
         }
-    }
+    });
+    return card;
 }
+
+shuffle(cards);
+
+for (const symbol of cards) {
+    const card = createCard(symbol);
+    container.appendChild(card);
+}
+
+const movesElement = document.createElement('p');
+movesElement.textContent = 'Moves: 0';
+movesElement.id = 'moves';
+container.insertAdjacentElement('beforebegin', movesElement);
