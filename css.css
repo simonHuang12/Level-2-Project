@@ -1,29 +1,47 @@
-.grid-container{
-    display:flex;
-    height:66%;
-    width:66%;
-    border: 3px black;
-    justify-content: space-evenly;
-    justify-items: center;
-    align-content: space-evenly;
-    align-items: center;
-}
-
-.card-container{
-    display:grid;
-    height: 500px;
-    width: 500px;
+h1, p{
+    text-align: center;
     justify-content: center;
-    grid-template-columns: repeat(4, 50px);
-    grid-template-rows: repeat(4, 50px);
-    grid-gap: 20px;
-    justify-content: space-evenly;
-    justify-items: center;
-    align-content: space-evenly;
-    align-items: center;
 }
 
-.card{
-    height:50px;
-    width:50px;
+.body-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 8px; 
+    text-align: center;
+}
+.scoreboard-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    margin: 8px;
+}
+img{
+    width: 10vw;
+    height: 10vh;
+}
+
+.flip-card{
+    background-color: white;
+    width: 100px;
+    height: 100px;
+    border: 10px black;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.flip-card-inner{
+    transform-style: preserve-3d;
+}
+.flip-card-front, .flip-card-back{
+    position: absolute;
+    backface-visibility: hidden;
+}
+.flip-card-back{
+    transform: rotateY(180deg);
 }
