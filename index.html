@@ -7,9 +7,20 @@
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
-    <div class="container" id="game-container">
-        <!-- Cards will be added here dynamically with JavaScript -->
+    <div class="container">
+        <h1>Matching Game</h1>
+    <p>Match all pairs of cards in the least amount of moves.</p>
+    <div class="game-container">
+        <!-- Cards will be generated here -->
     </div>
+    <div class="scoreboard-container">
+        <div>Score: <span id="score">0</span></div>
+        <div>Pairs matched: <span id="matched-pairs">0</span></div>
+        <button onclick="resetGame()">Reset Game</button>
+    </div>
+    </div>
+    
+    
 
     <script src="script.js"></script>
 </body>
