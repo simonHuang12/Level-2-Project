@@ -23,7 +23,7 @@ let flippedCards = [];
 let matches = 0;
 let score = 0;
 
-// Shuffle the images
+// Shuffle the images array
 images.sort(() => Math.random() - 0.5);
 
 // Create card elements and add to the game container
@@ -37,11 +37,13 @@ images.forEach((img) => {
     cards.push(card);
 });
 
+console.log(images); // Answer Key
+
 function flipCard(card) {
     score++;
     document.getElementById("score").innerHTML = score;
     if (flippedCards.length < 2 && !flippedCards.includes(card) && !card.classList.contains('hidden')) {
-        card.innerHTML = `<img src="images/${card.dataset.img}" alt="Card">`;
+        card.innerHTML = `<img src="images/${card.classList.contains('flipped') ? 'back.png' : card.dataset.img}" alt="Card">`;
         flippedCards.push(card);
         if (flippedCards.length === 2) {
             setTimeout(checkMatch, 1000);
@@ -64,7 +66,6 @@ function checkMatch() {
 
         if (matches === images.length / 2) {
             setTimeout(() => alert('Congratulations! You won!'), 500);
-            resetGame();
         }
     } else {
         card1.innerHTML = `<img src="images/back.png" alt="Card Back">`;
